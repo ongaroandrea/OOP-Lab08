@@ -1,5 +1,9 @@
 package it.unibo.oop.lab.advanced;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+
 /**
  */
 public final class DrawNumberApp implements DrawNumberViewObserver {
@@ -7,6 +11,11 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
     private static final int MIN = 0;
     private static final int MAX = 100;
     private static final int ATTEMPTS = 10;
+    
+    private static final String HOME = System.getProperty("user.home");
+    private static final String SEPARATOR = System.getProperty("file.separator");
+    private static final File DEFAULT_FILE = new File(HOME + SEPARATOR + "output.txt");
+    
     private final DrawNumber model;
     private final DrawNumberView view;
 
@@ -42,6 +51,11 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
         System.exit(0);
     }
 
+    public void saveGameResults() throws FileNotFoundException {
+        try (PrintStream ps = new PrintStream(DEFAULT_FILE)){
+            ps.println(this.model.);
+        }
+    }
     /**
      * @param args
      *            ignored
