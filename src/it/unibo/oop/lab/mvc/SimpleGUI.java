@@ -1,9 +1,17 @@
 package it.unibo.oop.lab.mvc;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import it.unibo.oop.lab.simplegui.MiniGUI;
 
 /**
  * A very simple program using a graphical interface.
@@ -38,7 +46,31 @@ public final class SimpleGUI {
      * builds a new {@link SimpleGUI}.
      */
     public SimpleGUI() {
+        final ControllerImpl cI = new ControllerImpl();
+        final JPanel canvas = new JPanel();
+        canvas.setLayout(new BorderLayout());
 
+        final JTextField txtField = new JTextField();
+        canvas.add(txtField, BorderLayout.NORTH);
+        final JButton btnPrint = new JButton("Print");
+        canvas.add(btnPrint, BorderLayout.WEST);
+        final JButton btnShowHistory = new JButton("Show History");
+        canvas.add(btnShowHistory, BorderLayout.EAST);
+
+        btnPrint.addActionListener(new ActionListener() {
+            public void actionPerformed(final ActionEvent e) {
+                cI.setNextStringToPrint(txtField.getText());
+            }
+        });
+
+        btnShowHistory.addActionListener(new ActionListener() {
+            public void actionPerformed(final ActionEvent e) {
+                for (final String s : cI.getHistory()) {
+                    System.out.println(s);
+                }
+            }
+        });
+        frame.setContentPane(canvas);
         /*
          * Make the frame half the resolution of the screen. This very method is
          * enough for a single screen setup. In case of multiple monitors, the
@@ -60,6 +92,10 @@ public final class SimpleGUI {
          * on screen. Results may vary, but it is generally the best choice.
          */
         frame.setLocationByPlatform(true);
+        frame.setVisible(true);
+        frame.pack();
     }
-
+    public static void main(final String... args) {
+        new SimpleGUI();
+     }
 }
